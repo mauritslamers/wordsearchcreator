@@ -27,7 +27,7 @@ AlphabetDialog::AlphabetDialog(QWidget *parent)
 {
     setupUi(this);
     this->setWindowModality(Qt::WindowModal);
-    http= new QHttp(this);
+    http= new QNetworkAccessManager(this);
     Alphabetcbox->addItem("Custom");
     Alphabetcbox->addItem("English - \"abcdefghijklmnopqrstuvwxyz\"","abcdefghijklmnopqrstuvwxyz");
     Alphabetcbox->addItem("Numbers - \"1234567890\"","1234567890");
@@ -159,72 +159,74 @@ void AlphabetDialog::save()
 
 void AlphabetDialog::getfromweb()
 {
-    QSettings settings;
-    settings.beginGroup("alphabets");
-    QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, tr("Word Search Creator"),
-                                  tr("Connect to internet and download more alphabets?"),
-                                  QMessageBox::Yes | QMessageBox::No);
-    if (reply != QMessageBox::Yes)
-        return;
-    http->setHost("wordsearchcreator.org");
-    buffer = new QBuffer;
-    httpGetId = http->post("/alphabets.xml","1.1", buffer);
+    // QSettings settings;
+    // settings.beginGroup("alphabets");
+    // QMessageBox::StandardButton reply;
+    // reply = QMessageBox::question(this, tr("Word Search Creator"),
+    //                               tr("Connect to internet and download more alphabets?"),
+    //                               QMessageBox::Yes | QMessageBox::No);
+    // if (reply != QMessageBox::Yes)
+    //     return;
+    // // http->setHost("wordsearchcreator.org");
+    // buffer = new QBuffer;
+    // QUrl url = QUrl("http://wordsearchcreator.org/alphabets.xml");
+    // // httpGetId = http->post("/alphabets.xml","1.1", buffer);
+    // httpGetId = http->post(url, buffer);
 }
 
 void AlphabetDialog::httpRequestFinished(int requestId, bool error)
 {
 //    std::cout << "test" << std::endl;
-    if (requestId != httpGetId)
-        return;
+//     if (requestId != httpGetId)
+//         return;
 
-    if (http->lastResponse().statusCode() != 200) {
+//     if (http->lastResponse().statusCode() != 200) {
         
-        QMessageBox::information(this, tr("HTTP"),
-                                 tr("Download failed: %1.")
-                                 .arg(http->lastResponse().reasonPhrase()));
-        return;
-    }
-    if (error) {
-        QMessageBox::information(this, tr("HTTP"),
-                                 tr("Download failed: %1.")
-                                 .arg(http->errorString()));
+//         QMessageBox::information(this, tr("HTTP"),
+//                                  tr("Download failed: %1.")
+//                                  .arg(http->lastResponse().reasonPhrase()));
+//         return;
+//     }
+//     if (error) {
+//         QMessageBox::information(this, tr("HTTP"),
+//                                  tr("Download failed: %1.")
+//                                  .arg(http->errorString()));
 
-    } else {
+//     } else {
 
-        buffer->open(QBuffer::ReadWrite);
+//         buffer->open(QBuffer::ReadWrite);
 
-        QDomDocument doc;
-        if (doc.setContent(buffer))
-        {
-            QDomElement root = doc.documentElement();
-            if( root.tagName() != "WSCXMLal" )
-            {
-                QMessageBox::information(this, tr("Wordsearch Creator"), tr("Incorrect file format."));
-                delete buffer;
-                return;
-            }
-            QSettings settings;
-            settings.beginGroup("alphabets");
-            QDomNodeList DEWordList = root.elementsByTagName("alphabet");
+//         QDomDocument doc;
+//         if (doc.setContent(buffer))
+//         {
+//             QDomElement root = doc.documentElement();
+//             if( root.tagName() != "WSCXMLal" )
+//             {
+//                 QMessageBox::information(this, tr("Wordsearch Creator"), tr("Incorrect file format."));
+//                 delete buffer;
+//                 return;
+//             }
+//             QSettings settings;
+//             settings.beginGroup("alphabets");
+//             QDomNodeList DEWordList = root.elementsByTagName("alphabet");
 
-            for (int i = 0; i < DEWordList.count(); i++)
-            {
-                QString alphabet = DEWordList.at(i).toElement().text();
-                QString alphabetname = DEWordList.at(i).toElement().attribute("name");
-                QString ealphabet = settings.value(alphabetname,QString()).toString();
-                if (!alphabetname.isEmpty() && !alphabet.isEmpty() && ealphabet.isNull())
-                {
-                    settings.setValue(alphabetname, alphabet);
-                    alphabetname.append(" - \"").append(alphabet).append("\"");
-                    Alphabetcbox->addItem(alphabetname,alphabet);
-                }
-            }
-        }
-        else
-            QMessageBox::information(this, tr("Wordsearch Creator"),
-                                     tr("XML Error."));
-        delete buffer;
-//        std::cout << "ok" << std::endl;
-    }
+//             for (int i = 0; i < DEWordList.count(); i++)
+//             {
+//                 QString alphabet = DEWordList.at(i).toElement().text();
+//                 QString alphabetname = DEWordList.at(i).toElement().attribute("name");
+//                 QString ealphabet = settings.value(alphabetname,QString()).toString();
+//                 if (!alphabetname.isEmpty() && !alphabet.isEmpty() && ealphabet.isNull())
+//                 {
+//                     settings.setValue(alphabetname, alphabet);
+//                     alphabetname.append(" - \"").append(alphabet).append("\"");
+//                     Alphabetcbox->addItem(alphabetname,alphabet);
+//                 }
+//             }
+//         }
+//         else
+//             QMessageBox::information(this, tr("Wordsearch Creator"),
+//                                      tr("XML Error."));
+//         delete buffer;
+// //        std::cout << "ok" << std::endl;
+//     }
 }

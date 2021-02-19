@@ -19,7 +19,7 @@
 
 #ifndef MASKDRAWER_H
 #define MASKDRAWER_H
-#include <QtGui>
+#include <QtWidgets>
 
 class WordSearchDoc;
 class wordsearch;

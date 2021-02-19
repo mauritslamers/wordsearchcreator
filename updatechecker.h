@@ -21,7 +21,7 @@
 #define UPDATECHECKER_H
 
 #include <QObject>
-#include <QtGui>
+#include <QtWidgets>
 #include <QtNetwork>
 
 class UpdateChecker : public QObject

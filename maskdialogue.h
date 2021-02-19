@@ -19,7 +19,7 @@
 
 #ifndef MASKDIALOGUE_H
 #define MASKDIALOGUE_H
-#include <QtGui>
+#include <QtWidgets>
 
 class WordSearchDoc;
 class MaskDrawer;

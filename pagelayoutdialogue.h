@@ -19,7 +19,8 @@
 
 #ifndef PAGELAYOUTDIALOGUE_H
 #define PAGELAYOUTDIALOGUE_H
-#include <QtGui>
+#include <QtWidgets>
+#include <QtPrintSupport/QPrinter>
 #include "ui_pagelayout.h"
 
 class PageLayoutDialog: public QDialog, private Ui::LayoutDialog

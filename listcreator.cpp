@@ -93,7 +93,7 @@ void listCreator::okPressed()
 	do{
 		if (newCursor.block().text().trimmed()!="")
 		{
-			wl << newCursor.block().text().trimmed().toAscii().data();
+			wl << newCursor.block().text().trimmed().toLatin1().data();
 		}
 	}
 	while(newCursor.movePosition(QTextCursor::Down));

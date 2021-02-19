@@ -19,7 +19,7 @@
 
 #ifndef LISTCREATOR_H
 #define LISTCREATOR_H
-#include <QtGui>
+#include <QtWidgets>
 #include "ui_listcreator.h"
 
 class listCreator : public QDialog, private Ui::listcreator

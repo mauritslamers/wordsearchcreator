@@ -19,8 +19,10 @@
 
 #ifndef WORDSEARCHDRAWER_H
 #define WORDSEARCHDRAWER_H
-#include <QtGui>
+#include <QtWidgets>
 #include <QtSvg>
+#include <QtPrintSupport/QPrinter>
+#include <QtPrintSupport/QPrintDialog>
 
 #include "wordsearchdoc.h"
 

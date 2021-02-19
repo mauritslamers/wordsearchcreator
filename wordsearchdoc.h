@@ -22,7 +22,8 @@
 
 #include <QtCore>
 #include <QtXml>
-#include <QtGui>
+#include <QtWidgets>
+#include <QtPrintSupport/QPrinter>
 #include "wordsearch.h"
 
 class WordSearchDoc : public QObject

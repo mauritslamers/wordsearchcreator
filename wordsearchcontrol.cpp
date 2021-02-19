@@ -33,7 +33,7 @@ WordSearchControl::WordSearchControl(QWidget *)
 {
     setupUi(this);
     usewordsSpinBox->setVisible(false);
-    http= new QHttp(this);
+    http= new QNetworkAccessManager(this);
     connect(titlebox, SIGNAL(textChanged(QString)), this, SIGNAL(titleChanged(QString)));
     connect(arscheckbox, SIGNAL(stateChanged(int)), this, SIGNAL(arsstateChanged(int)));
     connect(sacheckbox, SIGNAL(stateChanged(int)), this, SIGNAL(sastateChanged(int)));
@@ -150,40 +150,40 @@ int WordSearchControl::Save()
 
 void WordSearchControl::upload()
 {
-    if (!QMessageBox::question(
-            this,
-            tr("Word Search Creator"),
-            tr("You are about to send this word search over the internet to wordsearchcreator.org unencrypted. Do you wish to continue?"),
-            tr("&Yes"), tr("&No"), 0, 2))
-    {
-        QBuffer wsdatabuffer;
-        wsdatabuffer.open(QIODevice::WriteOnly);
-        wsd->saveToIO(wsdatabuffer);
-        http->setHost("wordsearchcreator.org");
-        webbuffer = new QBuffer;
-        httpPostId = http->post("/uploadws_1.0.php", wsdatabuffer.buffer(), webbuffer);
-    }
+    // if (!QMessageBox::question(
+    //         this,
+    //         tr("Word Search Creator"),
+    //         tr("You are about to send this word search over the internet to wordsearchcreator.org unencrypted. Do you wish to continue?"),
+    //         tr("&Yes"), tr("&No"), 0, 2))
+    // {
+    //     QBuffer wsdatabuffer;
+    //     wsdatabuffer.open(QIODevice::WriteOnly);
+    //     wsd->saveToIO(wsdatabuffer);
+    //     http->setHost("wordsearchcreator.org");
+    //     webbuffer = new QBuffer;
+    //     httpPostId = http->post("/uploadws_1.0.php", wsdatabuffer.buffer(), webbuffer);
+    // }
 }
 
 void WordSearchControl::httpRequestFinished(int requestId, bool error)
 {
     if (requestId != httpPostId) return;
 
-    if (http->lastResponse().statusCode() != 200) {
-        QMessageBox::information(this, tr("HTTP"), tr("Upload failed: %1.") .arg(http->lastResponse().reasonPhrase()));
-        delete webbuffer; return;
-    }
-    if (error) {
-        QMessageBox::information(this, tr("HTTP"), tr("Upload failed: %1.") .arg(http->errorString()));
-        delete webbuffer;
-        return;
+    // if (http->lastResponse().statusCode() != 200) {
+    //     QMessageBox::information(this, tr("HTTP"), tr("Upload failed: %1.") .arg(http->lastResponse().reasonPhrase()));
+    //     delete webbuffer; return;
+    // }
+    // if (error) {
+    //     QMessageBox::information(this, tr("HTTP"), tr("Upload failed: %1.") .arg(http->errorString()));
+    //     delete webbuffer;
+    //     return;
 
-    } else {
-        QUrl url("http://wordsearchcreator.org/uploadws_1.0_step2.php");
-        url.addQueryItem("id",webbuffer->buffer());
-        QDesktopServices::openUrl(url);
-        delete webbuffer;
-    }
+    // } else {
+    //     QUrl url("http://wordsearchcreator.org/uploadws_1.0_step2.php");
+    //     url.addQueryItem("id",webbuffer->buffer());
+    //     QDesktopServices::openUrl(url);
+    //     delete webbuffer;
+    // }
 }
 
 void WordSearchControl::SetupTemplate()

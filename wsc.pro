@@ -27,6 +27,8 @@ TARGET = wordsearchcreator
 QT += xml
 QT += network
 QT += svg
+QT += printsupport
+QT += widgets
 
 target.path = /usr/bin
 desktop.path = /usr/share/applications

@@ -19,7 +19,7 @@
 
 #ifndef APPEARANCE_H
 #define APPEARANCE_H
-#include <QtGui>
+#include <QtWidgets>
 #include "ui_appearance.h"
 
 class WordSearchDoc;
